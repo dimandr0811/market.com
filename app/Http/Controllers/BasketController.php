@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class BasketController extends Controller
 {
     public function basket()
     {
+
         // сессия с key orderID
         $orderID = session('orderID');
 
@@ -21,9 +23,33 @@ class BasketController extends Controller
         return view('basket',compact('order') );
     }
 
+    public function basketConfirm(Request $request)
+    {
+        $orderID = session('orderID');
+        if(is_null($orderID)){
+            return redirect()->route('index');
+        }
+        $order = Order::find($orderID);
+        $success = $order->saveOrder($request->name, $request->phone);
+
+
+        if ($success){
+            session()->flash('success', 'Ваш заказ принят в обработку');
+        } else{
+            session()->flash('warning', 'Ошибка');
+        }
+
+        return redirect()->route('index');
+    }
+
     public function basketPlace()
     {
-        return view('order' );
+        $orderID = session('orderID');
+        if(is_null($orderID)){
+            return redirect()->route('index');
+        }
+        $order = Order::find($orderID);
+        return view('order', compact('order') );
     }
 
     public function basketAdd($productId)
@@ -39,6 +65,7 @@ class BasketController extends Controller
             // если найден key orderID, то есть он не пустой, значит мы находим этот айди в таблице Order
             $order = Order::find($orderID);
         }
+
         // Проверить или есть такой товар уже в списке
         if ($order->products->contains($productId)){
             //Если есть, то найти его count и увеличить на 1
@@ -51,6 +78,8 @@ class BasketController extends Controller
             $order->products()->attach($productId);
         }
 
+        $product = Product::find($productId);
+        session()->flash('success', 'Добавлен товар ' .  $product->name);
 
 
         return redirect()->route('basket');
@@ -63,7 +92,7 @@ class BasketController extends Controller
             return redirect()->route('basket');
         }
         $order = Order::find($orderID);
-        $order->products()->detach($productId);
+
 
         if ($order->products->contains($productId)) {
             $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
@@ -74,8 +103,14 @@ class BasketController extends Controller
                 $pivotRow->update();
             }
         }
-            return redirect()->route('basket');
+
+        $product = Product::find($productId);
+        session()->flash('warning', 'Удален товар ' .  $product->name);
+
+        return redirect()->route('basket');
 
     }
+
+
 
 }

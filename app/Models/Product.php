@@ -17,6 +17,7 @@ class Product extends Model
         if (!is_null($this->pivot)){
             return $this->pivot->count * $this->price;
         }
+
         return $this->price;
     }
 }

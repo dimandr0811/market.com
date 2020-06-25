@@ -1,9 +1,8 @@
-@extends('master')
+@extends('layouts.master')
 
 @section('title', 'Товар')
 
 @section('content')
-    <div class="starter-template">
         <h1>iPhone X 64GB</h1>
         <h2>{{$product}}</h2>
         <h2>Мобильные телефоны</h2>
@@ -15,6 +14,5 @@
             <button type="submit" class="btn btn-success" role="button">Добавить в корзину</button>
 
             <input type="hidden" name="_token" value="EOvrgk5BhNFWQcYIJHtP0ssJAovvuQkpMW6NFAl9">        </form>
-    </div>
 @endsection
 
