@@ -11,7 +11,7 @@ class MainController extends Controller
     public function index()
     {
 
-        $products=Product::get();
+        $products=Product::paginate(9);
         return view('index', compact('products'));
     }
 

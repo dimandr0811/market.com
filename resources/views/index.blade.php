@@ -10,6 +10,6 @@
             @include('layouts.card', compact('product'))
 
             @endforeach
-
+            {{$products->links()}}
         </div>
 @endsection
