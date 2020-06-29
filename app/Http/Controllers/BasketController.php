@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
@@ -76,6 +77,11 @@ class BasketController extends Controller
             // затем мы в переменную, где есть таблица ордер, прикрепляем товар по его айди.
             // Айди берется из адресной строки. Так делается каждый раз когда переходим на товар
             $order->products()->attach($productId);
+        }
+
+        if (Auth::check()){
+            $order->user_id=Auth::id();
+            $order->save();
         }
 
         $product = Product::find($productId);
