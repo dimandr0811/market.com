@@ -59,7 +59,7 @@
                                     @if($product->category_id == $category->id)
                                         selected
                                         @endif
-                                    @endisset>{{$category->name}}</option>
+                                    @endisset> {{$category->name}}</option>
                             @endforeach
                         </select>
                     </div>
