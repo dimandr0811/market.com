@@ -44,7 +44,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <input type="text" class="form-control" name="name" id="name"
-                               value="@isset($product){{ $product->name }}@endisset">
+                               value="{{ old('name', isset($product) ? $product->name : null) }}">
                     </div>
                 </div>
                     <br>
@@ -73,7 +73,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <textarea name="description" id="description" cols="72"
-                                  rows="7">@isset($product){{ $product->description }}@endisset</textarea>
+                                  rows="7">{{ old('description', isset($product) ? $product->description : null) }}</textarea>
                     </div>
                 </div>
                 <br>
@@ -93,7 +93,7 @@
                         @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
-                        <input name="price" id="price" value="@isset($product){{ $product->price }}@endisset">
+                        <input name="price" id="price" value="{{ old('price', isset($product) ? $product->price : null) }}">
                     </div>
                 </div>
                 <button class="btn btn-success">Сохранить</button>

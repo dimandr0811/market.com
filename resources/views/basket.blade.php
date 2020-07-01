@@ -41,17 +41,18 @@
                             </form>
                         </div>
                     </td>
-                    <td>{{$product->price}} ₽</td>
-                    <td>{{$product->getPriceForCount()}} ₽</td>
+                    <td>{{$product->price}} грн</td>
+                    <td>{{$product->getPriceForCount()}} грн</td>
 
                 </tr>
                 @endforeach
-                @endisset
+
                 <tr>
                     <td colspan="3">Общая стоимость:</td>
-                    <td>{{$order->getFullPrice()}} руб</td>
+                    <td>{{$order->getFullPrice()}} грн</td>
                 </tr>
                 </tbody>
+                @endisset
             </table>
             <br>
             <div class="btn-group pull-right" role="group">
